@@ -1,24 +1,23 @@
 import javax.swing.JPanel;
-import java.awt.Graphics;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.util.ArrayList;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.lang.Math;
-import java.util.Collections;
-import java.awt.event.MouseMotionListener;
+import java.awt.Color;
+import java.awt.Point;
+import java.awt.Graphics;
+import java.awt.Dimension;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseMotionListener;
 
-public class MainPanel extends JPanel implements ActionListener, MouseMotionListener, MouseListener {
+public class MainPanel extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
 	public ControlPanel controlPanel;
 	public InformationPanel informationPanel;
 	public int[][] grid;
 	public int large = 5;
 	public int click;
 
-	public MainPanel(Coord location, Dimension size, Color background, ControlPanel controlPanel, InformationPanel informationPanel) {
+	public MainPanel(Point location, Dimension size, Color background, ControlPanel controlPanel, InformationPanel informationPanel) {
 		this.controlPanel = controlPanel;
 		this.informationPanel = informationPanel;
 
@@ -32,11 +31,16 @@ public class MainPanel extends JPanel implements ActionListener, MouseMotionList
 
 		this.setBackground(background);
 		this.setSize((int)size.getWidth(), (int)size.getHeight());
-		this.setLocation(location.x, location.y);
+		this.setLocation((int)location.getX(), (int)location.getY());
 
-		this.controlPanel.button.addActionListener(this);
+		this.controlPanel.button1.addActionListener(this);
+		this.controlPanel.button2.addActionListener(this);
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
+	}
+
+	public String find() {
+		return "test";
 	}
 
 	public void paintComponent(Graphics g) {
@@ -56,13 +60,19 @@ public class MainPanel extends JPanel implements ActionListener, MouseMotionList
 		}
 	}
 
-
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == this.controlPanel.button) {
-
-			this.informationPanel.jLabel.setText("test");
-			this.repaint();
+		if (e.getSource() == this.controlPanel.button1)
+			this.informationPanel.jLabel.setText(this.find());
+		else if (e.getSource() == this.controlPanel.button2) {
+			int n = this.getWidth()/this.large;
+			int m = this.getHeight()/this.large;
+			for (int i = 0; i < n; i += 1) {
+				for (int j = 0; j < m; j += 1)
+					this.grid[i][j] = 0;
+			}
+			this.informationPanel.jLabel.setText("");
 		}
+		this.repaint();
 	}
 
 	public void mousePressed(MouseEvent e) {

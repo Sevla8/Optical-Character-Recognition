@@ -6,7 +6,7 @@ public class MyFrame extends JFrame {
 		this.setSize(1000, 1000);
 		this.setLocation(0, 25);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setTitle("Bonus");
+		this.setTitle("OCR");
 		this.setLayout(null);
 
 		mainPanel.setOpaque(true);
